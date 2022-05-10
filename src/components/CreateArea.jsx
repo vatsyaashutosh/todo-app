@@ -7,6 +7,8 @@ export const CreateArea = (props) => {
     title: "",
     content: "",
   });
+
+  const [isExpanded, setIsExpanded] = useState(false);
   const handleChange = (e) => {
     const { value, name } = e.target;
     setNote((prev) => {
@@ -21,19 +23,25 @@ export const CreateArea = (props) => {
   return (
     <div>
       <form className="create-note">
-        <input
-          onChange={handleChange}
-          type="text"
-          name="title"
-          value={note.title}
-          placeholder="Title"
-        />
+        {isExpanded && (
+          <input
+            onChange={handleChange}
+            type="text"
+            name="title"
+            value={note.title}
+            placeholder="Title"
+          />
+        )}
+
         <textarea
           onChange={handleChange}
           name="content"
+          onClick={() => {
+            setIsExpanded(true);
+          }}
           value={note.content}
           placeholder="Take a note"
-          rows="3"
+          rows={isExpanded ? 3 : 1}
         />
         <Fab onClick={submitNote}>
           <AddIcon />
